@@ -1,3 +1,4 @@
+import { PaginaNaoEncontradaComponent } from './util/pagina-nao-encontrada.component';
 import { PedidoComponent } from './pedido/pedido.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
@@ -11,10 +12,10 @@ const routes: Routes = [
     component: LayoutComponent,
     children: [
       {path: 'pedido', component: PedidoComponent, data: { title: 'Pedido' }},
-      {path: '', redirectTo: '/pedido',pathMatch: 'full' }    
+      {path: '', redirectTo: '/pedido',pathMatch: 'full' } ,
+      { path: '**', component: PaginaNaoEncontradaComponent }  
     ]
   }
-//{ path: '**', component: PageNotFoundComponent }
 ];
 
 

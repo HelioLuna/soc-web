@@ -1,4 +1,40 @@
 <div class="card">
     <h1><span>CRIAR PEDIDO</span></h1>
+    <label>Cliente *:  </label>
+    <br/>
+    <p-autoComplete
+    [(ngModel)]="clienteSelecionado"
+    [suggestions]="clientesNomes"   
+    (completeMethod)="buscarCliente($event)"
+    [minLength]="1"
+    delay="800"   
+    (onSelect)="onSelectCliente()"
+    placeholder="Selecione um cliente"></p-autoComplete>
+
+    <br/><br/>
+    <label>Produto *:  </label>
+    <br/>
+    <p-autoComplete
+    [(ngModel)]="clienteSelecionado"
+    [suggestions]="clientesNomes"   
+    (completeMethod)="buscarCliente($event)"
+    [minLength]="1"
+    delay="800"   
+    (onSelect)="onSelectCliente()"
+    placeholder="Selecione um produto"></p-autoComplete>
+
+    <br/><br/>
+    <label>Quantidade *:  </label>
+    <br/>        
+    <span class="ui-float-label">
+        <input id="float-input" type="number" min="1" pInputText> 
+    </span>
+
+    <br/><br/>
+    <label>Preço unitário *:  </label>
+    <br/>        
+    <span class="ui-float-label">
+        <input currencyMask [(ngModel)]="valuePrecoUnitario" [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }" pInputText />      
+    </span>
 
 </div>
