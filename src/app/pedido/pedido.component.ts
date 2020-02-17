@@ -1,6 +1,5 @@
-import { NgForm, FormGroup, FormControl } from '@angular/forms';
 import { PedidoService } from './pedido.service';
-import { Component, OnInit, Input, OnDestroy, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AlertaService } from '../util/alerta.service';
 import { ErrorHandlerService } from '../util/error-handler.service';
 import { Cliente } from '../domain/cliente.model';
