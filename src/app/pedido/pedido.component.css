@@ -1,0 +1,26 @@
+.rentabilidade {
+    border-radius: 8px; 
+    width: 100px; 
+    text-align: center; 
+    color: white;
+}
+
+.show-rentabilidade{
+    display: block;
+}
+
+.not-show-rentabilidade{
+    display: none;
+}
+
+.rentabilidade-otima{
+    background-color: #43a12a;
+}
+
+.rentabilidade-boa{
+    background-color: #2a5ca1;
+}
+
+.rentabilidade-ruim{
+    background-color: #a12a2a;
+}

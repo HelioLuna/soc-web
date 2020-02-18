@@ -17,6 +17,10 @@ export class PedidoComponent implements OnInit  {
   clientes: Cliente[] = [];
   produtos: Produto[] = [];
 
+  displayRentabilidade: string = "not-show-rentabilidade";
+  corRentabilidade: string;
+  labelRentabilidade: string;
+
   constructor(private pedidoService: PedidoService, 
     private alertaService: AlertaService, 
     private errorHandler: ErrorHandlerService) { }
@@ -41,5 +45,41 @@ export class PedidoComponent implements OnInit  {
   selecionaProduto(){
     console.log(this.pedido);
     this.pedido.item.precoUnitario = this.pedido.item.produto.precoUnitario;
+  } 
+
+  setarRentabilidade(){
+    if(this.pedido.item.produto != null){
+       if (this.pedido.item.precoUnitario > this.pedido.item.produto.precoUnitario){
+        this.setarRentabilidadeOtima();
+      }
+      else if(this.pedido.item.precoUnitario >= this.getValorProdutoMenosDezPorCento() && this.pedido.item.precoUnitario <= this.pedido.item.produto.precoUnitario){
+        this.setarRentabilidadeBoa();
+      } 
+      else{
+        this.setarRentabilidadeRuim();
+      }
+    }
+  }
+  
+  getValorProdutoMenosDezPorCento() {
+    return this.pedido.item.produto.precoUnitario - (this.pedido.item.produto.precoUnitario * 10 /100);
+  }
+
+  setarRentabilidadeOtima() {
+    this.displayRentabilidade = "show-rentabilidade";
+    this.corRentabilidade =  "rentabilidade-otima";
+    this.labelRentabilidade = "Ótima";  
+  }
+
+  setarRentabilidadeBoa() {
+    this.displayRentabilidade = "show-rentabilidade";
+    this.corRentabilidade =  "rentabilidade-boa";
+    this.labelRentabilidade = "Boa";  
+  }
+
+  setarRentabilidadeRuim() {
+    this.displayRentabilidade = "show-rentabilidade";
+    this.corRentabilidade =  "rentabilidade-ruim";
+    this.labelRentabilidade = "Ruim";  
   }
 }
