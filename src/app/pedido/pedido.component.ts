@@ -1,8 +1,9 @@
 import { PedidoService } from './pedido.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ɵConsole } from '@angular/core';
 import { AlertaService } from '../util/alerta.service';
 import { ErrorHandlerService } from '../util/error-handler.service';
 import { Cliente } from '../domain/cliente.model';
+import { Produto } from '../domain/produto.model';
 
 @Component({
   selector: 'app-pedido',
@@ -11,40 +12,34 @@ import { Cliente } from '../domain/cliente.model';
 })
 export class PedidoComponent implements OnInit  {
 
-  pedido: any = {cliente: null, item: null};
-
-  valuePrecoUnitario: any;
+  pedido: any = {cliente: null, item: {id: null, produto: null, quantidade: null, precoUnitario: null }};
   
-  clienteSelecionado: string;
   clientes: Cliente[] = [];
-  clientesNomes: string[];
+  produtos: Produto[] = [];
 
   constructor(private pedidoService: PedidoService, 
     private alertaService: AlertaService, 
     private errorHandler: ErrorHandlerService) { }
   
   ngOnInit(): void {
+    this.iniciarClientes();
+    this.iniciarProdutos();
   }  
 
-  buscarCliente(event) {
-    this.clientes = [];
-    this.pedidoService.listarClientesPorNome(event.query).subscribe(data => {
+  iniciarClientes(){
+    this.pedidoService.listarClientes().subscribe(data => {
       this.clientes = data;
-      console.log(this.clientes);
-      this.criarListaStringCliente();
+    });
+  } 
+
+  iniciarProdutos(){
+    this.pedidoService.listarProdutos().subscribe(data => {
+      this.produtos = data;
     });
   }
-  
-  criarListaStringCliente() {
-    this.clientesNomes = [];
-    for(let i = 0; i < this.clientes.length; i++) {
-      this.clientesNomes.push(this.clientes[i].nome);
-    }
-  }   
 
-  onSelectCliente(){
-    console.log(this.clienteSelecionado);
-    this.pedido.cliente = this.clientes.filter(c => c.nome = this.clienteSelecionado);
+  selecionaProduto(){
     console.log(this.pedido);
+    this.pedido.item.precoUnitario = this.pedido.item.produto.precoUnitario;
   }
 }

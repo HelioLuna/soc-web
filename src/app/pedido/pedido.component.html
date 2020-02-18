@@ -1,40 +1,38 @@
 <div class="card">
-    <h1><span>CRIAR PEDIDO</span></h1>
-    <label>Cliente *:  </label>
-    <br/>
-    <p-autoComplete
-    [(ngModel)]="clienteSelecionado"
-    [suggestions]="clientesNomes"   
-    (completeMethod)="buscarCliente($event)"
-    [minLength]="1"
-    delay="800"   
-    (onSelect)="onSelectCliente()"
-    placeholder="Selecione um cliente"></p-autoComplete>
+        <h1><span>CRIAR PEDIDO</span></h1>
 
-    <br/><br/>
-    <label>Produto *:  </label>
-    <br/>
-    <p-autoComplete
-    [(ngModel)]="clienteSelecionado"
-    [suggestions]="clientesNomes"   
-    (completeMethod)="buscarCliente($event)"
-    [minLength]="1"
-    delay="800"   
-    (onSelect)="onSelectCliente()"
-    placeholder="Selecione um produto"></p-autoComplete>
+        <br/>
+        <label>Cliente *:  </label>
+        <br/>
+        <p-dropdown
+        [options]="clientes" 
+        [(ngModel)]="pedido.cliente" 
+        optionLabel="nome"
+        placeholder="Selecione um cliente"></p-dropdown>
 
-    <br/><br/>
-    <label>Quantidade *:  </label>
-    <br/>        
-    <span class="ui-float-label">
-        <input id="float-input" type="number" min="1" pInputText> 
-    </span>
+        <br/><br/>
+        <label>Produto *:  </label>
+        <br/>
+        <p-dropdown
+        [options]="produtos" 
+        [(ngModel)]="pedido.item.produto" 
+        optionLabel="nome"
+        (onChange)="selecionaProduto()"
+        placeholder="Selecione um produto"></p-dropdown>
 
-    <br/><br/>
-    <label>Preço unitário *:  </label>
-    <br/>        
-    <span class="ui-float-label">
-        <input currencyMask [(ngModel)]="valuePrecoUnitario" [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }" pInputText />      
-    </span>
-
+        <br/><br/>
+        <label>Quantidade *:  </label>
+        <br/>        
+        <span class="ui-float-label">
+            <input id="float-input" type="number" min="1" pInputText> 
+        </span>
+        <br/>
+        <label>Preço unitário *:  </label>
+        <br/>        
+        <span class="ui-float-label">
+            <input currencyMask [(ngModel)]="pedido.item.precoUnitario" [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }" pInputText />      
+        </span>
+        <br/><br/>
+        <hr style="clear:both">
+        <button pButton type="submit" label="Confirmar" [disabled]="true"></button>
 </div>
