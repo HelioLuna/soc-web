@@ -1,5 +1,6 @@
 import { PedidoService } from './pedido.service';
-import { Component, OnInit, ɵConsole } from '@angular/core';
+import {NgForm} from '@angular/forms';
+import { Component, OnInit, Input } from '@angular/core';
 import { AlertaService } from '../util/alerta.service';
 import { ErrorHandlerService } from '../util/error-handler.service';
 import { Cliente } from '../domain/cliente.model';
@@ -12,7 +13,7 @@ import { Produto } from '../domain/produto.model';
 })
 export class PedidoComponent implements OnInit  {
 
-  pedido: any = {cliente: null, item: {id: null, produto: null, quantidade: null, precoUnitario: null }};
+  @Input() pedido: any = {cliente: null, item: {id: null, produto: null, quantidade: null, precoUnitario: null }};
   
   clientes: Cliente[] = [];
   produtos: Produto[] = [];
@@ -20,6 +21,8 @@ export class PedidoComponent implements OnInit  {
   displayRentabilidade: string = "not-show-rentabilidade";
   corRentabilidade: string;
   labelRentabilidade: string;
+
+  isValoresSetado: boolean;
 
   constructor(private pedidoService: PedidoService, 
     private alertaService: AlertaService, 
@@ -42,9 +45,15 @@ export class PedidoComponent implements OnInit  {
     });
   }
 
+  confirmarPedido(frm: NgForm){
+    console.log(frm);
+    frm.reset();
+  }
+
   selecionaProduto(){
     console.log(this.pedido);
     this.pedido.item.precoUnitario = this.pedido.item.produto.precoUnitario;
+    this.setarRentabilidade();
   } 
 
   setarRentabilidade(){
@@ -81,5 +90,23 @@ export class PedidoComponent implements OnInit  {
     this.displayRentabilidade = "show-rentabilidade";
     this.corRentabilidade =  "rentabilidade-ruim";
     this.labelRentabilidade = "Ruim";  
+  }
+
+  checkValoresPedido(){
+    if(!this.pedido.cliente){
+      return false;
+    } 
+    else if(!this.pedido.item.produto){
+      return false;
+    }
+    else if(!this.pedido.item.quantidade){
+      return false;
+    }    
+    else if(!this.pedido.item.precoUnitario){
+      return false;
+    }
+    else{
+      return true;
+    }
   }
 }

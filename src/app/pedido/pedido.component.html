@@ -1,47 +1,55 @@
 <div class="card">
     <h1><span>CRIAR PEDIDO</span></h1>
+    <form #frmPedido="ngForm" (ngSubmit)="confirmarPedido(frmPedido)">
 
-    <br/>
-    <label>Cliente *:  </label>
-    <br/>
-    <p-dropdown
-    [options]="clientes" 
-    [(ngModel)]="pedido.cliente" 
-    optionLabel="nome"
-    placeholder="Selecione um cliente"></p-dropdown>
+        <br/>
+        <label>Cliente *:  </label>
+        <br/>
+        <p-dropdown
+        name="cliente" #cliente="ngModel"
+        required
+        [options]="clientes" 
+        [(ngModel)]="pedido.cliente" 
+        optionLabel="nome"
+        placeholder="Selecione um cliente"></p-dropdown>
 
-    <br/><br/>
-    <label>Produto *:  </label>
-    <br/>
-    <p-dropdown
-    [options]="produtos" 
-    [(ngModel)]="pedido.item.produto" 
-    optionLabel="nome"
-    (onChange)="selecionaProduto()"
-    placeholder="Selecione um produto"></p-dropdown>
+        <br/><br/>
+        <label>Produto *:  </label>
+        <br/>
+        <p-dropdown
+        name="produto" #produto="ngModel"
+        required
+        [options]="produtos" 
+        [(ngModel)]="pedido.item.produto" 
+        optionLabel="nome"
+        (onChange)="selecionaProduto()"
+        placeholder="Selecione um produto"></p-dropdown>
 
-    <br/><br/>
-    <label>Quantidade *:  </label>
-    <br/>        
-    <span class="ui-float-label">
-        <input id="float-input" type="number" min="1" pInputText> 
-    </span>
-
-    <br/>
-    <label>Preço unitário *:  </label>
-    <br/>        
-    <span class="ui-float-label">
-        <input currencyMask [(ngModel)]="pedido.item.precoUnitario" 
-        [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }" 
-        pInputText (ngModelChange)="setarRentabilidade()"/>      
-    </span>
-
-    <br/>
-    <div class="{{displayRentabilidade}}">
-        <label>Rentabilidade:  </label>
-        <div class="{{corRentabilidade}}" class="card rentabilidade">{{labelRentabilidade}}</div>
-    </div>       
-    <br/>
-    <hr style="clear:both">
-    <button pButton type="submit" label="Confirmar" [disabled]="true"></button>
+        <br/><br/>
+        <label>Quantidade *:  </label>
+        <br/>        
+        <span class="ui-float-label">
+            <input
+            name="quantidade" #quantidade="ngModel"
+            required
+            id="float-input" 
+            type="number" min="1"   
+            pInputText 
+            [(ngModel)]="pedido.item.quantidade"> 
+        </span>
+        <br/>
+        <label>Preço unitário *:  </label>
+        <br/>        
+        <span class="ui-float-label">
+            <input
+            name="precoUnitario" #precoUnitario="ngModel"
+            required
+            currencyMask 
+            [(ngModel)]="pedido.item.precoUnitario" 
+            [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }" pInputText />      
+        </span>
+        <br/><br/>
+        <hr style="clear:both">
+        <button pButton type="submit" label="Confirmar" [disabled]="frmPedido.invalid"></button>
+    </form>
 </div>

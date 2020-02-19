@@ -3,6 +3,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 import {AutoCompleteModule} from 'primeng/autocomplete';
 import {ListboxModule} from 'primeng/listbox';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { NgxCurrencyModule } from "ngx-currency";
 import { UtilModule } from './util/util.module';
@@ -18,7 +19,6 @@ import { PedidoService } from './pedido/pedido.service';
 import { HttpClientModule } from '@angular/common/http';
 import { ErrorHandlerService } from './util/error-handler.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
 @NgModule({
