@@ -24,3 +24,11 @@
 .rentabilidade-ruim{
     background-color: #a12a2a;
 }
+
+.r2d2 {
+    float: right;
+    vertical-align: middle;
+    width: 440px;
+    height: 440px;
+    background: url("../../assets/layout/images/r2d2.png") no-repeat;
+  }

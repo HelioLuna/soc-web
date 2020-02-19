@@ -1,5 +1,6 @@
 <div class="card">
-    <h1><span>CRIAR PEDIDO</span></h1>
+    <h1><span>CRIAR PEDIDO</span></h1> 
+    <div class="r2d2"></div>
     <form #frmPedido="ngForm" (ngSubmit)="confirmarPedido(frmPedido)">
 
         <br/>
@@ -45,9 +46,15 @@
             name="precoUnitario" #precoUnitario="ngModel"
             required
             currencyMask 
+            (ngModelChange)="setarRentabilidade($event)"
             [(ngModel)]="pedido.item.precoUnitario" 
             [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }" pInputText />      
         </span>
+        <br/>
+        <div class="{{displayRentabilidade}}">
+            <label>Rentabilidade:  </label>
+            <div class="{{corRentabilidade}}" class="card rentabilidade">{{labelRentabilidade}}</div>
+        </div>           
         <br/><br/>
         <hr style="clear:both">
         <button pButton type="submit" label="Confirmar" [disabled]="frmPedido.invalid"></button>

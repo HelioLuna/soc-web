@@ -46,22 +46,20 @@ export class PedidoComponent implements OnInit  {
   }
 
   confirmarPedido(frm: NgForm){
-    console.log(frm);
-    frm.reset();
+    console.log(this.pedido)
   }
 
   selecionaProduto(){
-    console.log(this.pedido);
     this.pedido.item.precoUnitario = this.pedido.item.produto.precoUnitario;
-    this.setarRentabilidade();
+    this.setarRentabilidade(this.pedido.item.precoUnitario);
   } 
 
-  setarRentabilidade(){
+  setarRentabilidade(precoUnitario){
     if(this.pedido.item.produto != null){
-       if (this.pedido.item.precoUnitario > this.pedido.item.produto.precoUnitario){
+       if (precoUnitario > this.pedido.item.produto.precoUnitario){
         this.setarRentabilidadeOtima();
       }
-      else if(this.pedido.item.precoUnitario >= this.getValorProdutoMenosDezPorCento() && this.pedido.item.precoUnitario <= this.pedido.item.produto.precoUnitario){
+      else if(precoUnitario >= this.getValorProdutoMenosDezPorCento() && precoUnitario <= this.pedido.item.produto.precoUnitario){
         this.setarRentabilidadeBoa();
       } 
       else{
