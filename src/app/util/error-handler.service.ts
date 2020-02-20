@@ -8,6 +8,7 @@ export class ErrorHandlerService {
   constructor(private alertaService: AlertaService) { }
 
   handle(errorResponse: any) {
+    console.log(errorResponse);
     let msg: string;
 
     if (typeof errorResponse === 'string') {
@@ -31,7 +32,11 @@ export class ErrorHandlerService {
 
       console.error('Ocorreu um erro', errorResponse);
 
-    } else {
+    } else if (errorResponse instanceof HttpErrorResponse
+      && errorResponse.status == 500) {
+        msg = errorResponse.error.message;
+      }
+      else {
       msg = 'Erro ao processar serviço remoto. Tente novamente.';
       console.error('Ocorreu um erro', errorResponse);
     }

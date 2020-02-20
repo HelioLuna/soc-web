@@ -5,6 +5,7 @@ import { AlertaService } from '../util/alerta.service';
 import { ErrorHandlerService } from '../util/error-handler.service';
 import { Cliente } from '../domain/cliente.model';
 import { Produto } from '../domain/produto.model';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-pedido',
@@ -13,7 +14,7 @@ import { Produto } from '../domain/produto.model';
 })
 export class PedidoComponent implements OnInit  {
 
-  @Input() pedido: any = {cliente: null, item: {id: null, produto: null, quantidade: null, precoUnitario: null }};
+  @Input() pedido: any = {id: null, cliente: null, item: {id: null, produto: null, quantidade: null, precoUnitario: null }};
   
   clientes: Cliente[] = [];
   produtos: Produto[] = [];
@@ -24,13 +25,15 @@ export class PedidoComponent implements OnInit  {
 
   isValoresSetado: boolean;
 
-  constructor(private pedidoService: PedidoService, 
+  constructor(private pedidoService: PedidoService,
+    private rotaAtivada: ActivatedRoute,
     private alertaService: AlertaService, 
     private errorHandler: ErrorHandlerService) { }
   
   ngOnInit(): void {
     this.iniciarClientes();
     this.iniciarProdutos();
+    this.verificarSeRotaEhDeAlteracao();
   }  
 
   iniciarClientes(){
@@ -45,8 +48,39 @@ export class PedidoComponent implements OnInit  {
     });
   }
 
+  private verificarSeRotaEhDeAlteracao() {
+    this.rotaAtivada.params.subscribe((parametros) => {
+        if (parametros['id']) {
+            this.consultarPorId(parametros['id']);
+        } 
+      });
+  }
+
+  consultarPorId(id: any) {
+    this.pedidoService.consultarPorId(id).subscribe(pedidoRetornado => {
+      console.log(pedidoRetornado);
+      if(pedidoRetornado){
+        this.pedido = pedidoRetornado;
+        this.setarRentabilidade(this.pedido.item.precoUnitario);
+      }
+    });
+  }
+
   confirmarPedido(frm: NgForm){
-    console.log(this.pedido)
+    if(this.pedido.id != null) {
+      this.pedidoService.alterar(this.pedido).subscribe(pedidoCriado => {
+        this.alertaService.exibirSucesso("Pedido alterado com sucesso.");
+        frm.reset();
+      },
+      erro => this.errorHandler.handle(erro));
+    }else {
+      this.pedidoService.salvar(this.pedido).subscribe(pedidoCriado => {
+        this.alertaService.exibirSucesso("Pedido criado com sucesso.");
+        frm.reset();
+      },
+      erro => this.errorHandler.handle(erro));
+    }
+
   }
 
   selecionaProduto(){

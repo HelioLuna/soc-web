@@ -1,5 +1,5 @@
 <div class="card">
-    <h1><span>CRIAR PEDIDO</span></h1> 
+    <h1>{{ pedido.id == null ? "CRIAR PEDIDO" : "ALTERAR PEDIDO"}}</h1> 
     <div class="r2d2"></div>
     <form #frmPedido="ngForm" (ngSubmit)="confirmarPedido(frmPedido)">
 
