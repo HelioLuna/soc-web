@@ -29,7 +29,7 @@ export class PedidoService {
     }
 
     alterar(pedido: Pedido): Observable<Pedido> {
-        return this.httpClient.post<Pedido>(`${this.resourceUrlPedido}/alterar`, pedido);
+        return this.httpClient.put<Pedido>(`${this.resourceUrlPedido}/alterar`, pedido);
     }
 
 }
